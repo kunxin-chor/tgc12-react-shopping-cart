@@ -1,10 +1,12 @@
-import React, {useState} from "react"
+import React, {useState, useContext} from "react"
 import axios from "axios"
 import config from "../config";
-
+import UserContext from "../UserContext";
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const userContext = useContext(UserContext);
 
     async function login() {
         let response = await axios.post(config.API_URL + "/users/login",{
@@ -13,7 +15,11 @@ export default function LoginPage() {
         });
 
         localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('refreshToken', response.data.refreshToken)
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        userContext.setUser({
+            'email': email,
+            'password': password
+        })
 
     }
 

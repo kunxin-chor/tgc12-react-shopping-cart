@@ -10,7 +10,7 @@ export default function UserProfile() {
         async function fetch() {
             const response = await axios.get(config.API_URL + "/users/profile", {
                 'headers': {
-                    'Authorization': 'Bear ' + localStorage.get('accessToken')
+                    'Authorization': 'Bear ' + localStorage.getItem('accessToken')
                 }
             });
             setProfile(response.data)
@@ -18,7 +18,9 @@ export default function UserProfile() {
 
         fetch();
 
-    })
+    }, [])
+
+  
 
     return (
         <React.Fragment>
